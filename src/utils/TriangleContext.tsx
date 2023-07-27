@@ -2,7 +2,7 @@ import { useContext, createContext, useState } from 'react'
 
 export const TriangleContext = createContext({
   triangle: undefined as number[][] | undefined,
-  setTriangle: (triangle: number[][]) => {},
+  setTriangle: (triangle?: number[][]) => {},
 })
 
 export const TriangleProvider = ({

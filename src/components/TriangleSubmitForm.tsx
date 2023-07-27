@@ -3,6 +3,12 @@ import { parseTriangle } from '@/utils/parseTriangle'
 import { type FormEvent, type ChangeEvent, useRef } from 'react'
 import { toast } from 'sonner'
 
+const EXAMPLE_TRIANGLE = `5
+9 6
+4 6 8
+0 7 1 5
+8 3 1 1 2`
+
 const FileIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -68,6 +74,12 @@ const TriangleSubmitForm = () => {
     }
   }
 
+  const handlePrefillExample = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.value = EXAMPLE_TRIANGLE
+    }
+  }
+
   if (triangle) return null
 
   return (
@@ -121,11 +133,18 @@ const TriangleSubmitForm = () => {
           className="block w-full mt-2 rounded-lg border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl"
         ></textarea>
       </div>
-      <div className="flex items-center justify-end gap-x-6">
+      <div className="flex items-center gap-x-6">
+        <button
+          type="button"
+          onClick={handlePrefillExample}
+          className="text-sm leading-6 text-gray-900 hover:text-gray-600"
+        >
+          Prefill with example
+        </button>
         <button
           type="button"
           onClick={handleFormClear}
-          className="text-sm leading-6 text-gray-900"
+          className="ml-auto text-sm leading-6 text-gray-900 hover:text-gray-600"
         >
           Clear
         </button>

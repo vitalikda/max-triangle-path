@@ -17,8 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex flex-col items-center min-h-screen p-24 space-y-8">
-          {children}
+        <main className="min-h-screen overflow-x-hidden">
+          <div className="relative flex flex-col items-center h-full p-12 md:p-24">
+            <div className="absolute left-0 -z-10 h-[300px] w-[480px] -translate-x-1/2 rounded-full bg-gradient-radial from-white to-transparent blur-2xl lg:h-[360px]"></div>
+            <div className="absolute right-0 -z-20 h-[180px] w-[240px] translate-x-1/3 bg-gradient-conic from-sky-200 via-blue-200 blur-2xl"></div>
+            {children}
+          </div>
         </main>
       </body>
     </html>
