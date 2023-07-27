@@ -5,7 +5,7 @@ export const TriangleContext = createContext({
   setTriangle: (triangle: number[][]) => { },
 });
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const TriangleProvider = ({ children }: { children: React.ReactNode }) => {
   const [triangle, setTriangle] = useState<number[][]>();
 
   return (

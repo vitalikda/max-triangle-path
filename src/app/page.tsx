@@ -2,13 +2,15 @@
 
 import { TrianglePreview } from '@/components/TrianglePreview';
 import TriangleSubmitForm from '@/components/TriangleSubmitForm';
-import { ThemeProvider } from '@/utils/TriangleContext';
+import { TriangleProvider } from '@/utils/TriangleContext';
+import { Toaster } from 'sonner';
 
 export default function Home() {
   return (
-    <ThemeProvider>
+    <TriangleProvider>
       <TriangleSubmitForm />
       <TrianglePreview />
-    </ThemeProvider>
+      <Toaster />
+    </TriangleProvider>
   )
 }

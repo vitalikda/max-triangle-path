@@ -1,8 +1,7 @@
-'use client';
-
 import { useTriangle } from '@/utils/TriangleContext';
 import { parseTriangle } from '@/utils/parseTriangle';
-import { type FormEvent } from 'react';
+import { type FormEvent, type ChangeEvent, useRef } from 'react';
+import { toast } from 'sonner';
 
 const FileIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mx-auto text-gray-500" aria-hidden="true">
@@ -11,18 +10,49 @@ const FileIcon = () => (
 )
 
 const TriangleSubmitForm = () => {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const { triangle, setTriangle } = useTriangle()
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const file = event.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+
+      reader.onload = async (e) => {
+        const triangleStr = e.target?.result
+        if (typeof triangleStr === 'string') {
+          try {
+            const triangleArray = await parseTriangle(triangleStr)
+            setTriangle(triangleArray)
+          } catch {
+            toast.error('Please enter a valid triangle')
+          }
+        }
+      }
+
+      reader.readAsText(file)
+    }
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.target as HTMLFormElement)
-    const text = data.get('triangle-text') as string
-    const file = data.get('triangle-file') as File
-    const triangleStr = text || await file?.text()
+    const triangleStr = data.get('triangle-text') as string | undefined
     if (triangleStr) {
-      const triangleArray = parseTriangle(triangleStr)
-      setTriangle(triangleArray)
-    } else {
-      alert('Please enter a valid triangle')
+      try {
+        const triangleArray = await parseTriangle(triangleStr)
+        setTriangle(triangleArray)
+      } catch {
+        toast.error('Please enter a valid triangle')
+      }
+    }
+  }
+
+  const handleFormClear = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.value = ''
     }
   }
 
@@ -31,7 +61,7 @@ const TriangleSubmitForm = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-5xl space-y-6 font-mono text-sm">
       <div className="w-full">
-        <label htmlFor="triangle-file" className="block text-sm font-medium leading-6 text-gray-900">
+        <label className="block text-sm font-medium leading-6 text-gray-900">
           Upload a triangle file
         </label>
         <div className="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25 bg-gradient-to-b from-zinc-200">
@@ -39,11 +69,11 @@ const TriangleSubmitForm = () => {
             <FileIcon />
             <div className="flex mt-4 text-sm leading-6 text-gray-600">
               <label
-                htmlFor="file-upload"
+                htmlFor="triangle-file"
                 className="relative font-semibold text-blue-600 bg-transparent rounded-md cursor-pointer focus-within:outline-none focus-within:ring-1 focus-within:ring-blue-300 focus-within:ring-offset-1 hover:text-blue-500"
               >
                 <span>Upload a file</span>
-                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                <input id="triangle-file" name="triangle-file" type="file" multiple={false} accept='txt' onChange={handleFileChange} className="sr-only" />
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
@@ -58,6 +88,7 @@ const TriangleSubmitForm = () => {
           Or enter it manually here
         </label>
         <textarea
+          ref={textAreaRef}
           id="triangle-text"
           name="triangle-text"
           rows={3}
@@ -65,7 +96,7 @@ const TriangleSubmitForm = () => {
         ></textarea>
       </div>
       <div className="flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm leading-6 text-gray-900">
+        <button type="button" onClick={handleFormClear} className="text-sm leading-6 text-gray-900">
           Clear
         </button>
         <button
