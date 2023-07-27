@@ -1,11 +1,13 @@
-export const getMaxPath = (triangle: number[][]): { sum: number; path: number[] } => {
+export const getMaxPath = (
+  triangle: number[][],
+): { sum: number; path: number[] } => {
   const len = triangle.length
 
   // handle base case
   if (len === 1) {
     return {
       sum: triangle[0][0],
-      path: [0]
+      path: [0],
     }
   }
 
@@ -33,6 +35,6 @@ export const getMaxPath = (triangle: number[][]): { sum: number; path: number[] 
 
   return {
     sum: tri[0][0],
-    path
+    path,
   }
 }
