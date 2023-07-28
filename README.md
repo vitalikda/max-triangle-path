@@ -2,7 +2,7 @@
 
 This web app allows you to upload or paste a triangle of numbers and displays it along with the maximum sum of a path through the triangle.
 
-## Usage
+### Usage
 
 To use the app, simply visit the website and either upload a file containing a triangle of numbers, paste the triangle directly into the input field or prefill with an example. The triangle should be in the following format:
 
@@ -14,6 +14,12 @@ To use the app, simply visit the website and either upload a file containing a t
 ```
 
 Once you have uploaded or pasted the triangle, the app will display it along with the maximum sum of a path through the triangle.
+
+### TODO
+
+- [ ] Add tests
+- [ ] Refactor to use Turbo repo: move util functions into a module
+- [ ] Improve Triangle Preview to show large elements that don't fit into the viewport
 
 ### Contributing
 
