@@ -1,13 +1,8 @@
+import { TRIANGLE_EXAMPLE } from '@/constants/triangle'
 import { useTriangle } from '@/utils/TriangleContext'
 import { parseTriangle } from '@/utils/parseTriangle'
 import { type FormEvent, type ChangeEvent, useRef } from 'react'
 import { toast } from 'sonner'
-
-const EXAMPLE_TRIANGLE = `5
-9 6
-4 6 8
-0 7 1 5
-8 3 1 1 2`
 
 const FileIcon = () => (
   <svg
@@ -76,7 +71,7 @@ const TriangleSubmitForm = () => {
 
   const handlePrefillExample = () => {
     if (textAreaRef.current) {
-      textAreaRef.current.value = EXAMPLE_TRIANGLE
+      textAreaRef.current.value = TRIANGLE_EXAMPLE
     }
   }
 
