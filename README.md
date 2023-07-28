@@ -17,7 +17,6 @@ Once you have uploaded or pasted the triangle, the app will display it along wit
 
 ### TODO
 
-- [ ] Add tests
 - [ ] Refactor to use Turbo repo: move util functions into a module
 - [ ] Improve Triangle Preview to show large elements that don't fit into the viewport
 
