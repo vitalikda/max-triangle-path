@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "format": "prettier -w .",
+    "format:check": "prettier -c ."
   },
   "dependencies": {
     "next": "13.4.12",

@@ -1,0 +1,37 @@
+name: Deployment tests
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test_unit:
+    name: Unit tests
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'pnpm'
+      - run: pnpm install
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Check linting
+        run: pnpm lint
+      - name: Run tests
+        run: pnpm test
